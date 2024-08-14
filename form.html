@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- code here -->
+    <div class="card">
+      <div class="card-image">	
+        <h2 class="card-heading">
+          
+        </h2>
+      </div>
+      <form class="card-form">
+        <div class="input">
+          <input type="text" id="name" class="input-field" value="" required/>
+          <label class="input-label">Full name</label>
+        </div>
+              <div class="input">
+          <input type="date" id="dob" class="input-field" value="2024-02-12" required/>
+          <label class="input-label">Birth Date</label>
+        </div>
+              <div class="input">
+          <input type="number" id="num" class="input-field" required/>
+          <label class="input-label">Phone Number</label>
+        </div>
+        <div class="action">
+          <button class="action-button" id="submit">Claim Now</button>
+        </div>
+      </form>
+      <div class="stars" style="display: none;">
+        <input type="radio" id="star1" name="rating" value="1" />
+        <label for="star1">&#9733;</label>
+        <input type="radio" id="star2" name="rating" value="2" />
+        <label for="star2">&#9733;</label>
+        <input type="radio" id="star3" name="rating" value="3" />
+        <label for="star3">&#9733;</label>
+        <input type="radio" id="star4" name="rating" value="4" />
+        <label for="star4">&#9733;</label>
+        <input type="radio" id="star5" name="rating" value="5" />
+        <label for="star5">&#9733;</label>
+    </div>
+
+    <div id="message">Thank you for reviewing us</div>
+      <div class="card-info">
+        <p>By signing up you are agreeing to our <a href="#">Terms and Conditions</a></p>
+      </div>
+    </div>
+    
+  </div>
+  
+</body>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+  import { getDatabase, ref, set,get, child } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+      apiKey: "AIzaSyBYRU5MWGIOQ2DEWNSXeohnohQzqrRs3D8",
+      authDomain: "newform-b9ee4.firebaseapp.com",
+      projectId: "newform-b9ee4",
+      storageBucket: "newform-b9ee4.appspot.com",
+      messagingSenderId: "653708027605",
+      appId: "1:653708027605:web:7c1b79681aebd3f8b4a45c"
+    };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  const db = getDatabase(app);
+
+  document.getElementById("submit").addEventListener('click', function(e) {
+    e.preventDefault();
+    set(ref(db, 'user/' + document.getElementById("name").value), {
+
+        username: document.getElementById("name").value,
+        dob: document.getElementById("dob").value,
+        num: document.getElementById("num").value
+    });
+
+    setTimeout(() => {
+      // window.location = "./stars.html"
+      document.querySelector('.stars').style.display = ''
+      document.querySelector('form').style.display = 'none'
+
+    }, 2000);
+    // alert("Login success")
+  })
+
+  const stars = document.querySelectorAll('.stars label');
+    const message = document.getElementById('message');
+    
+    stars.forEach((label, index) => {
+        label.addEventListener('click', function() {
+            // Remove the hover effect when clicked
+            stars.forEach((l) => l.classList.remove('hover'));
+
+            // Add the active class to clicked stars
+            stars.forEach((l, i) => {
+                if (i <= index) {
+                    l.classList.add('active');
+                } else {
+                    l.classList.remove('active');
+                }
+            });
+
+            // Show the message or redirect based on the star clicked
+            if (index < 3) { // 1st, 2nd, or 3rd star clicked
+                message.style.display = 'block';
+            } else { // 4th or 5th star clicked
+                message.style.display = 'none';
+                window.location.href = 'https://www.google.com/search?q=d+decor+aurangabad&sca_esv=cd1c1d76151aa7bf&sca_upv=1&sxsrf=ADLYWILYifbIn6ol60TgfY8lqaaTP5uMxA%3A1723557676094&ei=LGe7Zou9BbGv4-EPlIOYsQo&gs_ssp=eJzj4tVP1zc0TMsyNDTMMKsyYLRSNagwTkpJSjROMUhNS7U0TDEztwIKmScamaWaJJknGZknpaaaewmlKKSkJucXKSSWFiXmpScmJaYAABWbFmg&oq=d+decor+a&gs_lp=Egxnd3Mtd2l6LXNlcnAiCWQgZGVjb3IgYSoCCAAyCxAuGIAEGMcBGK8BMgsQLhiABBjHARivATIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMhoQLhiABBjHARivARiXBRjcBBjeBBjgBNgBA0iiPVD7NFjpNXABeAGQAQCYAbkBoAHkAqoBAzAuMrgBA8gBAPgBAZgCBKAClQrCAgoQABiwAxjWBBhHwgINEAAYsAMY1gQYRxjJA8ICDhAAGIAEGLADGJIDGIoFwgINEAAYgAQYsAMYQxiKBcICDhAAGLADGOQCGNYE2AEBwgIbEC4YgAQYsAMY0QMYQxjHARjIAxiKBRgK2AECwgITEC4YgAQYsAMYQxjIAxiKBdgBAsICGRAuGIAEGLADGEMYxwEYyAMYigUYrwHYAQLCAgoQABiABBhDGIoFwgIQEAAYgAQYsQMYQxiDARiKBZgDAIgGAZAGELoGBggBEAEYCboGBggCEAEYCLoGBggDEAEYFJIHBzEuMi42LTGgB7sZ&sclient=gws-wiz-serp#lrd=0x3bdba3d0efe91d67:0x37a26e4b7b27bee7,3,,,,'; // Redirect to the specified URL
+            }
+        });
+
+        label.addEventListener('mouseover', function() {
+            // Add the hover effect to stars on mouseover
+            stars.forEach((l, i) => {
+                if (i <= index) {
+                    l.classList.add('hover');
+                } else {
+                    l.classList.remove('hover');
+                }
+            });
+        });
+
+        label.addEventListener('mouseout', function() {
+            // Remove the hover effect when the mouse leaves
+            stars.forEach((l) => l.classList.remove('hover'));
+        });
+    });
+
+</script>
+</html>
