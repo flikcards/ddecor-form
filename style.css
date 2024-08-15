@@ -40,8 +40,10 @@ input {
 	overflow: hidden;
 	padding-bottom: 65%;
 	/* background-image: url('./logo.png'); */
-	background-image: url('./ddecor.jpg');
-	/* background-repeat: no-repeat; */
+	background-image: url('./logoddecor.png');
+	/* object-fit: cover; */
+	margin-top: 20%;
+	background-repeat: no-repeat;
 	background-size: 100%;
 	background-position: 0 5%;
 	position: relative;

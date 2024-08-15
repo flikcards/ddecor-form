@@ -45,7 +45,7 @@
         <tr>
           <th>Name</th>
           <th>Number</th>
-          <th class="birth">Birth Date</th>
+          <!-- <th class="birth">Birth Date</th> -->
         </tr>
       </thead>
       <tbody id="userTableBody"></tbody>
@@ -102,7 +102,6 @@
           tr.innerHTML = `
       <td>${user.username}</td>
       <td>${user.num}</td>
-      <td>${user.dob.split("-")[2] + "-" + user.dob.split("-")[1]}</td>
     `;
           document.querySelector("tbody").append(tr);
         });
@@ -112,70 +111,70 @@
     });
   }
 
-  document.querySelector(".birth").addEventListener("click", () => {
-    // let justNames = Object.keys(users);
-    let data = users;
-    Object.keys(users).forEach((i) => (users[i].dob = users[i].dob.slice(5)));
+  // document.querySelector(".birth").addEventListener("click", () => {
+  //   // let justNames = Object.keys(users);
+  //   let data = users;
+  //   Object.keys(users).forEach((i) => (users[i].dob = users[i].dob.slice(5)));
 
-    const sortedData = Object.values(data).sort((a, b) => {
-      const [aMonth, aDay] = a.dob.split("-").map(Number);
-      const [bMonth, bDay] = b.dob.split("-").map(Number);
+  //   const sortedData = Object.values(data).sort((a, b) => {
+  //     const [aMonth, aDay] = a.dob.split("-").map(Number);
+  //     const [bMonth, bDay] = b.dob.split("-").map(Number);
 
-      if (aMonth !== bMonth) {
-        return aMonth - bMonth;
-      } else {
-        return aDay - bDay;
-      }
-    });
+  //     if (aMonth !== bMonth) {
+  //       return aMonth - bMonth;
+  //     } else {
+  //       return aDay - bDay;
+  //     }
+  //   });
 
-    console.log(sortedData);
+  //   console.log(sortedData);
 
-    let todyDate = new Date().getDate();
-    let todayMonth = new Date().getMonth() + 1;
+  //   let todyDate = new Date().getDate();
+  //   let todayMonth = new Date().getMonth() + 1;
 
-    if (sorted) {
-      return;
-      document.querySelector("tbody").innerHTML = "";
-      console.log("data");
-      console.log(users);
-      data.forEach((user) => {
-        tr = document.createElement("tr");
-        tr.innerHTML = `
-                <td>${user.username}</td>
-                <td>${user.num}</td>
-                <td>${user.dob.split("-")[1] + "-" + user.dob.split("-")[0]
-          }</td>
-              `;
-        document.querySelector("tbody").append(tr);
-      });
-      sorted = false;
-      return;
-    } else {
-      for (let i = 0; i < sortedData.length; i++) {
-        if (sortedData[i].dob.split("-")[0] >= todayMonth) {
-          if (sortedData[i].dob.split("-")[1] >= todyDate) {
-            let newArr = sortedData.slice(i).concat(sortedData.slice(0, i));
+  //   if (sorted) {
+  //     return;
+  //     document.querySelector("tbody").innerHTML = "";
+  //     console.log("data");
+  //     console.log(users);
+  //     data.forEach((user) => {
+  //       tr = document.createElement("tr");
+  //       tr.innerHTML = `
+  //               <td>${user.username}</td>
+  //               <td>${user.num}</td>
+  //               <td>${user.dob.split("-")[1] + "-" + user.dob.split("-")[0]
+  //         }</td>
+  //             `;
+  //       document.querySelector("tbody").append(tr);
+  //     });
+  //     sorted = false;
+  //     return;
+  //   } else {
+  //     for (let i = 0; i < sortedData.length; i++) {
+  //       if (sortedData[i].dob.split("-")[0] >= todayMonth) {
+  //         if (sortedData[i].dob.split("-")[1] >= todyDate) {
+  //           let newArr = sortedData.slice(i).concat(sortedData.slice(0, i));
 
-            console.log(sorted);
-            document.querySelector("tbody").innerHTML = "";
-            newArr.forEach((user) => {
-              tr = document.createElement("tr");
-              tr.innerHTML = `
-                <td>${user.username}</td>
-                <td>${user.num}</td>
-                <td>${user.dob.split("-")[1] + "-" + user.dob.split("-")[0]
-                }</td>
-              `;
-              document.querySelector("tbody").append(tr);
-            });
-            sorted = true;
-            return;
-          }
-        }
-      }
-      sorted = true;
-    }
-  });
+  //           console.log(sorted);
+  //           document.querySelector("tbody").innerHTML = "";
+  //           newArr.forEach((user) => {
+  //             tr = document.createElement("tr");
+  //             tr.innerHTML = `
+  //               <td>${user.username}</td>
+  //               <td>${user.num}</td>
+  //               <td>${user.dob.split("-")[1] + "-" + user.dob.split("-")[0]
+  //               }</td>
+  //             `;
+  //             document.querySelector("tbody").append(tr);
+  //           });
+  //           sorted = true;
+  //           return;
+  //         }
+  //       }
+  //     }
+  //     sorted = true;
+  //   }
+  // });
 
   setTimeout(() => {
     getUsers();
